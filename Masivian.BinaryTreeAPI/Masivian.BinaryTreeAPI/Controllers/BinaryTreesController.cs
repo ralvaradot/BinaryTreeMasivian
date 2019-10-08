@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Masivian.BinaryTreeAPI.Models;
+using Masivian.BinaryTreeAPI.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,13 +19,13 @@ namespace Masivian.BinaryTreeAPI.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("{nodes}")]
         public IActionResult CreateTree(int nodes)
         {
-            if (nodes == 0)
+            if (nodes == 0 || nodes <= 3)
                 return BadRequest("Numero de Nodos invalido");
 
-            return Ok(new BinaryTree() { });
+            return Ok(_service.CreateTree(nodes));
         }
     }
 }

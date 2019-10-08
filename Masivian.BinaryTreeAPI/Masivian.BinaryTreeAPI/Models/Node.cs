@@ -25,5 +25,6 @@
         /// Id Nodo  Derecho
         /// </summary>
         public int IdLeftNode { get; set; }
+        public int Level { get; set; }
     }
 }
