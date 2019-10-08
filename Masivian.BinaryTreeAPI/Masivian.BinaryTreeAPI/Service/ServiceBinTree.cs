@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Masivian.BinaryTreeAPI.Models;
 
@@ -150,7 +151,38 @@ namespace Masivian.BinaryTreeAPI.Service
             Node node1 = tree.Nodes.FirstOrDefault(n => n.Id == firstNode);
             Node node2 = tree.Nodes.FirstOrDefault(n => n.Id == secondNode);
 
-            return node1;
+            StringBuilder sbQuery = new StringBuilder();
+            int father = node1.IdFatherNode;
+            sbQuery.AppendLine(father.ToString());
+
+            while (father != 0)
+            {
+                Node node = tree.Nodes.FirstOrDefault(n => n.Id == father);
+                father = node.IdFatherNode;
+                sbQuery.AppendLine(father.ToString());
+            }
+            string[] array1 = sbQuery.ToString().Split('\n');
+
+            sbQuery = new StringBuilder();
+            father = node2.IdFatherNode;
+            sbQuery.AppendLine(father.ToString());
+            string hallado = string.Empty;
+
+            while (father != 0)
+            {
+                Node node = tree.Nodes.FirstOrDefault(n => n.Id == father);
+                father = node.IdFatherNode;
+                sbQuery.AppendLine(father.ToString());
+
+                hallado = array1.FirstOrDefault(n => n.Trim() == father.ToString().Trim());
+                if (hallado != "")
+                    break;
+            }
+
+            string[] array2 = sbQuery.ToString().Split('\n');
+
+            Node node3 = tree.Nodes.FirstOrDefault(n => n.Id == Convert.ToInt32(hallado));
+            return node3;
         }
     }
 }
